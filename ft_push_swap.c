@@ -23,58 +23,44 @@ void free_tab(char **a)
     free(a);
 }
 
-void print_elem(char **a)
+int secure_args(int argc, char **argv)
 {
-    size_t i;
-
-    i = 0;
-    while (a[i])
+    if (argc < 2)
     {
-        ft_printf("%s\n", a[i]);
-        i++;
+        ft_printf("Erreur\n");
+        return (0);
     }
-}
-
-int get_mode(int argc, char **argv)
-{
-    int count;
-
-    count = 0;
-    if (argc > 3)
+    if (argc < 3)
+    {
+        ft_printf("Mode adaptative\n");
         return (1);
-    if (argv[1] == "--simple")
-    {
-        while (stack_a[count])
-            count++;
-        simple_mode(a, count);
     }
-    if (argv[1] == "--medium")
-
-
-    if (argv[1] == "--complex")
-
-
-    if (argv[1] == "--adaptative")
-
     return (0);
 }
 
-char **ft_push_swap(int argc, char **argv)
+t_list *ft_push_swap(int argc, char **argv)
 {
-    char **stack_a;
-    char **stack_b;
-    int count;
+    char    **stack_a;
+    t_list  *a;
+    t_list  *b;
 
+    a = NULL;
+    b = NULL;
     stack_a = parsing(argc, argv);
+    if (!secure_args)
+        return (NULL);
     if (!stack_a)
         return (NULL);
-    count = 0;
-    while (stack_a[count])
-        count++;
-    if (!verify_double(stack_a, count))
+    if (!verify_double(stack_a, ft_tablen(a)))
     {
         ft_printf("There is a duplicate");
         return (NULL);
     }
-    return (stack_a);
+    a = tab_in_list(stack_a, count, a);
+    free_tab(stack_a);
+    if (secure_args(argc, argv) == 1)
+        a = get_strategie("--adaptative", a);
+    else if
+        a = get_strategie(argv[3], a);
+    return (a);
 }
