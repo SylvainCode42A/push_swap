@@ -1,36 +1,36 @@
-NAME = push_swap.a
-
-SRCS = 	set_tab.c \
-		strjoin_space.c \
-		ft_push_swap.c \
-		push.c \
-		reverse_rotate.c \
-		rotate.c \
-		swap.c \
-		simple.c \
-		medium.c
-
-OBJS = $(SRCS:.c=.o)
-
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -I./includes -I../libft/includes
-
-LIBFT = ../libft/libft.a
-PRINTF = ../ft_printf/libftprintf.a
-LIBS = $(LIBFT) $(PRINTF)
+NAME = push_swap
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror -I. -Ift_printf
+SRC = main.c \
+	  ft_push_swap.c \
+      utils_fonctions_1.c \
+      utils_fonctions_2.c \
+	  utils_fonctions_3.c \
+      simple.c \
+      modes_utils.c \
+      medium.c \
+      complex.c \
+      swap.c \
+      rotate.c \
+      reverse_rotate.c \
+      push.c
+OBJ = $(SRC:.c=.o)
+PRINTF = ft_printf/printf.a
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	ar rcs $(NAME) $(OBJS)
+$(NAME): $(OBJ) $(PRINTF)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(PRINTF)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJ)
+	make -C ft_printf clean
 
 fclean: clean
 	rm -f $(NAME)
+	make -C ft_printf fclean
 
 re: fclean all
